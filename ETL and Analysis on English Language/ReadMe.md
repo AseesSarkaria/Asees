@@ -1,7 +1,7 @@
 # Outline
 
 ## Limitation
-Merriam Webster api has a limit of 1k calls per day and only allows one word per call
+Merriam Webster api has a limit of 1k calls per day and only allows one word per call: https://www.dictionaryapi.com/products/json
 
 ## Set Up
 1. Get list of all words from https://github.com/dwyl/english-words?tab=readme-ov-file
