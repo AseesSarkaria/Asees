@@ -21,8 +21,8 @@ Merriam Webster api has a limit of 1k calls per day and only allows one word per
 1. Transactions to ensure integrity of loaded data and creation of master table
 2. Create master table. Source of truth data. 
 3. Use master to create downstream tables for different types of analytic queries
-   a. analytics engine for postgres: https://github.com/paradedb/pg_analytics
 
 Relevant functions and notes: 
 1. string_to_array(some_string, NULL) will expand the letters ARRAY column
-2. Indexes on ARRARY columns in postgres: https://stackoverflow.com/questions/4058731/can-postgresql-index-array-columns 
+2. Indexes on ARRARY columns in postgres: https://stackoverflow.com/questions/4058731/can-postgresql-index-array-columns
+3. Analytics engine for postgres: https://github.com/paradedb/pg_analytics
