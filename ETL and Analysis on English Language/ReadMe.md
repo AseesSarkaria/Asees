@@ -20,7 +20,7 @@ Merriam Webster api has a limit of 1k calls per day and only allows one word per
 ## Postgres
 1. Transactions to ensure integrity of loaded data and creation of master table
 2. Create master table. Source of truth data. 
-4. Use master to create downstream tables for different types of analytic queries
+3. Use master to create downstream tables for different types of analytic queries
    a. analytics engine for postgres: https://github.com/paradedb/pg_analytics
 
 Relevant functions and notes: 
