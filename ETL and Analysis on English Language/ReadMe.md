@@ -26,3 +26,10 @@ Relevant functions and notes:
 1. string_to_array(some_string, NULL) will expand the letters ARRAY column
 2. Indexes on ARRARY columns in postgres: https://stackoverflow.com/questions/4058731/can-postgresql-index-array-columns
 3. Analytics engine for postgres: https://github.com/paradedb/pg_analytics
+
+
+# Analytics
+
+## Ideas
+1. Queries for all of these special types of words: https://theweek.com/articles/464433/palindromes-anagrams-9-other-names-alphabetical-antics
+2. Word games, e.g. Scrabble, game pigeon word games, etc
