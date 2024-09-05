@@ -1,5 +1,12 @@
 # Outline
 
+## Sources of inspiration
+1. https://github.com/jcoffland/wotd-game
+2. https://github.com/ibrosen/MerriamWebsterScraper
+3. https://youtu.be/PUkgK7TI0x0?si=7mcwRfeXFqyKO5LA
+4. https://youtu.be/Acojo0G9kD0?si=jsZqpqx9iBwg0gf5
+5. https://youtu.be/PUkgK7TI0x0?si=7mcwRfeXFqyKO5LA
+
 ## Limitation
 Merriam Webster api has a limit of 1k calls per day and only allows one word per call: https://www.dictionaryapi.com/products/json
 
