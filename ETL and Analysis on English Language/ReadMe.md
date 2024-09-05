@@ -24,8 +24,9 @@ Merriam Webster api has a limit of 1k calls per day and only allows one word per
 1. Pull words from api using word_list into all_words
 2. Add column to all_words of whether its data has been loaded into database or not (boolean)
 3. Create job to run at the end of each day to load the next 1k words from API, minus however many calls have already been made
-  a. create a counter for api calls
-4. Handle (exclude?) variants (varitons of words, e.g. alt spellings, different parts of speech)
+   a. Create a counter for api calls
+   b. Airflow is probably overkill. Might be simpler to use windows task scheduler. BUT - Resume Driven Development XD 
+5. Handle (exclude?) variants (varitons of words, e.g. alt spellings, different parts of speech)
 
 ## Postgres
 1. Transactions to ensure integrity of loaded data and creation of master table
