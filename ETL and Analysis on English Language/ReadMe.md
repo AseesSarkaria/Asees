@@ -18,6 +18,9 @@ Merriam Webster api has a limit of 1k calls per day and only allows one word per
 2. Get word frequency list from https://www.wordfrequency.info/samples.asp
 3. Use frequency to determine order of api call of that word and store the info for that word
 
+# DevOps
+1. remote connections to database: https://blog.devart.com/configure-postgresql-to-allow-remote-connection.html
+
 # Design
 
 ## Python ELT
