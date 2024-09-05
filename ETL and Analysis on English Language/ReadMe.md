@@ -43,3 +43,4 @@ Relevant functions and notes:
 ## Ideas
 1. Queries for all of these special types of words: https://theweek.com/articles/464433/palindromes-anagrams-9-other-names-alphabetical-antics
 2. Word games, e.g. Scrabble, game pigeon word games, etc
+   a. https://www.freescrabbledictionary.com/english-word-list/
