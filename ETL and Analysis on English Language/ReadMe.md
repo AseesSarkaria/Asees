@@ -3,7 +3,7 @@
 # The Inspiration: 
 https://www.reddit.com/r/SQL/comments/g4ct1l/comment/fnx11mc/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 
-## Other Innspiration
+## Other Inspirations
 1. https://github.com/jcoffland/wotd-game
 2. https://github.com/ibrosen/MerriamWebsterScraper
 3. https://youtu.be/PUkgK7TI0x0?si=7mcwRfeXFqyKO5LA
