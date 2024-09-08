@@ -33,7 +33,7 @@ Merriam Webster api has a limit of 1k calls per day and only allows one word per
    a. Create a counter for api calls
    b. Airflow is probably overkill. Might be simpler to use windows task scheduler. BUT - Resume Driven Development XD
       1. https://stackoverflow.com/questions/50671270/how-to-use-airflow-for-orchestrating-simple-pandas-etl-python-scripts
-5. Handle (exclude?) variants (varitons of words, e.g. alt spellings, different parts of speech)
+4. Handle (exclude?) variants (varitons of words, e.g. alt spellings, different parts of speech)
 
 ## Postgres
 1. Transactions to ensure integrity of loaded data and creation of master table
@@ -50,5 +50,22 @@ Relevant functions and notes:
 
 ## Ideas
 1. Queries for all of these special types of words: https://theweek.com/articles/464433/palindromes-anagrams-9-other-names-alphabetical-antics
-2. Word games, e.g. Scrabble, game pigeon word games, etc
+   a. Isogram - A word in which no letter of the alphabet occurs more than once
+   b. Pangram - A phrase or sentence containing all 26 letters of the alphabet
+   c. Palindrome - A word, sentence, or longer written work that reads the same backwards
+   d. Semordnilap - A word or name that spells a different word backwards (notice what semordnilap spells backwards)
+   e. Kangaroo word- This refers to a word carrying another word within it (without transposing any letters)
+   f. Anagram - A word or phrase formed by rearranging the letters of another word or phrase
+   g. Aptagram - A word that has a meaning that is relevant to the original word that was anagrammed
+   h. Antigram - The opposite of an aptigram, these words or phrases form antonyms when rearranged
+   i. Homonym: words with same sounds and same spellings but with different meanings
+   j. Homograph: words with same spellings but with different meanings
+   k. Homophone: words with same sounds but with different meanings
+   l. Rhyme: a repetition of identical or similar sounds in two or more different words
+   m. Alliteration: matching consonants sounds at the beginning of words
+   n. Assonance: matching vowel sounds
+   o. Consonance: matching consonant sounds
+   p. Blanagram: rearranging the letters of a word or phrase and substituting one single letter to produce a new word or phrase
+   q. Letter bank: using the letters from a certain word or phrase as many times as wanted to produce a new word or phrase
+3. Word games, e.g. Scrabble, game pigeon word games, etc
    a. https://www.freescrabbledictionary.com/english-word-list/
