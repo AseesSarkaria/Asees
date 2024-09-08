@@ -15,8 +15,11 @@ Merriam Webster api has a limit of 1k calls per day and only allows one word per
 
 ## Set Up
 1. Get list of all words from https://github.com/dwyl/english-words?tab=readme-ov-file
-2. Get word frequency list from https://www.wordfrequency.info/samples.asp
-3. Use frequency to determine order of api call of that word and store the info for that word
+2. Get word frequencies:
+   a. https://github.com/first20hours/google-10000-english/blob/master/README.md
+   b. https://www.vocabulary.com/lists/52473
+   c. https://www.wordfrequency.info/samples.asp
+4. Use frequency to determine order of api call of that word and store the info for that word
 
 # DevOps
 1. remote connections to database: https://blog.devart.com/configure-postgresql-to-allow-remote-connection.html
@@ -28,7 +31,8 @@ Merriam Webster api has a limit of 1k calls per day and only allows one word per
 2. Add column to all_words of whether its data has been loaded into database or not (boolean)
 3. Create job to run at the end of each day to load the next 1k words from API, minus however many calls have already been made
    a. Create a counter for api calls
-   b. Airflow is probably overkill. Might be simpler to use windows task scheduler. BUT - Resume Driven Development XD 
+   b. Airflow is probably overkill. Might be simpler to use windows task scheduler. BUT - Resume Driven Development XD
+      1. https://stackoverflow.com/questions/50671270/how-to-use-airflow-for-orchestrating-simple-pandas-etl-python-scripts
 5. Handle (exclude?) variants (varitons of words, e.g. alt spellings, different parts of speech)
 
 ## Postgres
