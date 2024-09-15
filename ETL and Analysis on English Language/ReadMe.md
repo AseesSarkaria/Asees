@@ -67,5 +67,9 @@ Relevant functions and notes:
    o. Consonance: matching consonant sounds
    p. Blanagram: rearranging the letters of a word or phrase and substituting one single letter to produce a new word or phrase
    q. Letter bank: using the letters from a certain word or phrase as many times as wanted to produce a new word or phrase
-3. Word games, e.g. Scrabble, game pigeon word games, etc
+2. Word games, e.g. Scrabble, game pigeon word games, etc
    a. https://www.freescrabbledictionary.com/english-word-list/
+   b. make it online too
+3. OCR type stuff
+4. If you type a wrong word, the api will return closely matching words. add functionality to handle this
+   a. Could handle this through some ML model
