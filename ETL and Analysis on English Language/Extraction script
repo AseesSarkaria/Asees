@@ -1,0 +1,28 @@
+import logging
+logging.basicConfig(level = logging.INFO)
+import json
+import requests
+import pandas as pd
+import re
+
+
+api_key = "##########################" 
+word = "apple"
+lang = "en"
+loc = "us"
+audio_format = "mp3"
+
+
+def mw_call(api_key = api_key, word = word):
+    logging.info("Connecting...")
+    URL = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/"+word+"?key="+api_key 
+
+    r = requests.get(URL)
+    r.encoding = 'utf-8'
+  
+    if r.status_code == 200:
+        logging.info("Connection successful.")
+        return r.json()
+    else:
+        logging.info("Connection failed.")
+        return Print("Error")
