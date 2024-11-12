@@ -17,6 +17,7 @@ FROM actor a
   LEFT JOIN category c ON fc.category_id = c.category_id
 GROUP BY a.actor_id, a.first_name, a.last_name
 ```
+```text
 ---top 5 rows output---
 1	"Penelope"	"Guiness"		"Animation: Anaconda Confessions, Children: Language Cowboy, Classics: Color Philadelphia, Westward Seabiscuit, Comedy: Vertigo Northwest, Documentary: Academy Dinosaur, Family: King Evolution, Splash Gump, Foreign: Mulholland Beast, Games: Bulworth Commandments, Human Graffiti, Horror: Elephant Trojan, Lady Stage, Rules Human, Music: Wizard Coldblooded, New: Angels Life, Oklahoma Jumanji, Sci-Fi: Cheaper Clyde, Sports: Gleaming Jawbreaker"
 2	"Nick"	    "Wahlberg"      "Action: Bull Shawshank, Animation: Fight Jawbreaker, Children: Jersey Sassy, Classics: Dracula Crystal, Gilbert Pelican, Comedy: Mallrats United, Rushmore Mermaid, Documentary: Adaptation Holes, Drama: Wardrobe Phantom, Family: Apache Divine, Chisum Behavior, Indian Love, Maguire Apache, Foreign: Baby Hall, Happiness United, Games: Roof Champion, Music: Lucky Flying, New: Destiny Saturday, Flash Wars, Jekyll Frogmen, Mask Peach, Sci-Fi: Chainsaw Uptown, Goodfellas Salute, Travel: Liaisons Sweet, Smile Earring"
