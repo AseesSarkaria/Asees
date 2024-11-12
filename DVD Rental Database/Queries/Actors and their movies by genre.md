@@ -1,9 +1,3 @@
-<style>
-  pre code {
-    tab-size: 4;
-  }
-</style>
-
 ```sql
 SELECT 
 	a.actor_id
@@ -25,7 +19,7 @@ GROUP BY a.actor_id, a.first_name, a.last_name
 ```
 ```text
 ---top 5 rows output---
-1	"Penelope"	"Guiness"	"Animation: Anaconda Confessions, Children: Language Cowboy, Classics: Color Philadelphia, Westward Seabiscuit, Comedy: Vertigo Northwest, Documentary: Academy Dinosaur, Family: King Evolution, Splash Gump, Foreign: Mulholland Beast, Games: Bulworth Commandments, Human Graffiti, Horror: Elephant Trojan, Lady Stage, Rules Human, Music: Wizard Coldblooded, New: Angels Life, Oklahoma Jumanji, Sci-Fi: Cheaper Clyde, Sports: Gleaming Jawbreaker"
+1	"Penelope"	"Guiness"		"Animation: Anaconda Confessions, Children: Language Cowboy, Classics: Color Philadelphia, Westward Seabiscuit, Comedy: Vertigo Northwest, Documentary: Academy Dinosaur, Family: King Evolution, Splash Gump, Foreign: Mulholland Beast, Games: Bulworth Commandments, Human Graffiti, Horror: Elephant Trojan, Lady Stage, Rules Human, Music: Wizard Coldblooded, New: Angels Life, Oklahoma Jumanji, Sci-Fi: Cheaper Clyde, Sports: Gleaming Jawbreaker"
 2	"Nick"	    "Wahlberg"      "Action: Bull Shawshank, Animation: Fight Jawbreaker, Children: Jersey Sassy, Classics: Dracula Crystal, Gilbert Pelican, Comedy: Mallrats United, Rushmore Mermaid, Documentary: Adaptation Holes, Drama: Wardrobe Phantom, Family: Apache Divine, Chisum Behavior, Indian Love, Maguire Apache, Foreign: Baby Hall, Happiness United, Games: Roof Champion, Music: Lucky Flying, New: Destiny Saturday, Flash Wars, Jekyll Frogmen, Mask Peach, Sci-Fi: Chainsaw Uptown, Goodfellas Salute, Travel: Liaisons Sweet, Smile Earring"
 3	"Ed"	    "Chase"    	    "Action: Caddyshack Jedi, Forrest Sons, Classics: Frost Head, Jeepers Wedding, Documentary: Army Flintstones, French Holiday, Halloween Nuts, Hunter Alter, Wedding Apollo, Young Language, Drama: Luck Opus, Necklace Outbreak, Spice Sorority, Foreign: Cowboy Doom, Whale Bikini, Music: Alone Trip, New: Eve Resurrection, Platoon Instinct, Sci-Fi: Weekend Personal, Sports: Artist Coldblooded, Image Princess, Travel: Boondock Ballroom"
 4	"Jennifer"  "Davis"	        "Action: Barefoot Manchurian, Animation: Anaconda Confessions, Ghostbusters Elf, Comedy: Submarine Bed, Documentary: Bed Highball, National Story, Raiders Antitrust, Drama: Blade Polish, Greedy Roots, Family: Splash Gump, Horror: Treasure Command, Music: Hanover Galaxy, Reds Pocus, New: Angels Life, Jumanji Blade, Oklahoma Jumanji, Sci-Fi: Random Go, Silverado Goldfinger, Unforgiven Zoolander, Sports: Instinct Airport, Poseidon Forever, Travel: Boondock Ballroom"
