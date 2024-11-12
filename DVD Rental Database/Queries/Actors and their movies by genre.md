@@ -1,3 +1,9 @@
+<style>
+  pre code {
+    tab-size: 4;
+  }
+</style>
+
 ```sql
 SELECT 
 	a.actor_id
