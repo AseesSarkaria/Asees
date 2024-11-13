@@ -1,0 +1,28 @@
+"definition"
+" SELECT b.store_id,
+    date_part('year'::text, a.payment_date) AS year,
+    date_part('month'::text, a.payment_date) AS month,
+    count(*) AS purchase_volume,
+    sum(a.amount) AS revenue,
+    (round(((100.0 * (count(*))::numeric) / (lag(count(*)) OVER (PARTITION BY b.store_id))::numeric), 2) - (100)::numeric) AS mom_purchase_volume,
+    (round(((100.0 * sum(a.amount)) / lag(sum(a.amount)) OVER (PARTITION BY b.store_id)), 2) - (100)::numeric) AS mom_revenue,
+    round((((100.0 * sum(a.amount)) / lag(sum(a.amount)) OVER (PARTITION BY b.store_id)) - (((100.0 * (count(*))::numeric) / (lag(count(*)) OVER (PARTITION BY b.store_id))::numeric) - (100)::numeric)), 2) AS mom_purchases_to_revenue_ratio,
+    max(a.amount) AS biggest_purchase,
+    min(
+        CASE
+            WHEN (a.amount > (0)::numeric) THEN a.amount
+            ELSE NULL::numeric
+        END) AS smallest_purchase,
+    (max(a.amount) - min(
+        CASE
+            WHEN (a.amount > (0)::numeric) THEN a.amount
+            ELSE NULL::numeric
+        END)) AS max_min_difference,
+    round(avg(a.amount), 2) AS average_purchase,
+    percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((a.amount)::double precision)) AS median_purchase,
+    (round(avg(a.amount), 2) - (percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((a.amount)::double precision)))::numeric) AS avg_med_difference,
+    round(stddev(a.amount), 2) AS standard_deviation
+   FROM (payment a
+     JOIN staff b ON ((a.staff_id = b.staff_id)))
+  GROUP BY b.store_id, (date_part('year'::text, a.payment_date)), (date_part('month'::text, a.payment_date))
+  ORDER BY b.store_id, (date_part('year'::text, a.payment_date)), (date_part('month'::text, a.payment_date));"
