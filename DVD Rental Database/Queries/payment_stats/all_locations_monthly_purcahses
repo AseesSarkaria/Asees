@@ -1,0 +1,25 @@
+SELECT date_part('year'::text, payment.payment_date) AS year,
+    date_part('month'::text, payment.payment_date) AS month,
+    count(*) AS purchase_volume,
+    sum(payment.amount) AS revenue,
+    (round(((100.0 * (count(*))::numeric) / (lag(count(*)) OVER ())::numeric), 2) - (100)::numeric) AS mom_purchase_volume,
+    (round(((100.0 * sum(payment.amount)) / lag(sum(payment.amount)) OVER ()), 2) - (100)::numeric) AS mom_revenue,
+    round((((100.0 * sum(payment.amount)) / lag(sum(payment.amount)) OVER ()) - (((100.0 * (count(*))::numeric) / (lag(count(*)) OVER ())::numeric) - (100)::numeric)), 2) AS mom_purchases_to_revenue_ratio,
+    max(payment.amount) AS biggest_purchase,
+    min(
+        CASE
+            WHEN (payment.amount > (0)::numeric) THEN payment.amount
+            ELSE NULL::numeric
+        END) AS smallest_purchase,
+    (max(payment.amount) - min(
+        CASE
+            WHEN (payment.amount > (0)::numeric) THEN payment.amount
+            ELSE NULL::numeric
+        END)) AS max_min_difference,
+    round(avg(payment.amount), 2) AS average_purchase,
+    percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((payment.amount)::double precision)) AS median_purchase,
+    (round(avg(payment.amount), 2) - (percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((payment.amount)::double precision)))::numeric) AS avg_med_difference,
+    round(stddev(payment.amount), 2) AS standard_deviation
+   FROM payment
+  GROUP BY (date_part('year'::text, payment.payment_date)), (date_part('month'::text, payment.payment_date))
+  ORDER BY (date_part('year'::text, payment.payment_date)), (date_part('month'::text, payment.payment_date))
