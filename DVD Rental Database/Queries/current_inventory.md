@@ -10,8 +10,8 @@ FROM films_in_inventory f
 ```text
 --top 5 rows---
 "film_id"  "total_owned"  "in_inventory"  "rented_out"
-652	        4	         4	             0
-273	        7	         6	             1
-51	        6            	 6	             0
-951        	7	         7	             0
-839	        2                2	             0
+652	        4	         4	         0
+273	        7	         6	         1
+51	        6            	 6	         0
+951        	7	         7	         0
+839	        2                2	         0
