@@ -1,0 +1,17 @@
+CREATE OR REPLACE FUNCTION infer_symbol_by_column(value NUMERIC, column_name TEXT)
+RETURNS TEXT AS $$
+BEGIN
+    -- Check if column name ends with _p for percentage
+    IF column_name LIKE '%_p' THEN
+        RETURN CONCAT(value, '%');
+        
+    -- Check if column name ends with _m for monetary value
+    ELSIF column_name LIKE '%_m' THEN
+        RETURN CONCAT('$', value);
+        
+    -- Default case for no special formatting
+    ELSE
+        RETURN value::TEXT;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
