@@ -1,0 +1,7 @@
+ERROR:  function infer_symbol_by_column(integer, unknown) is not unique
+LINE 1: SELECT 'store_id' AS column_name, infer_symbol_by_column(sto...
+                                          ^
+HINT:  Could not choose a best candidate function. You might need to add explicit type casts.
+QUERY:  SELECT 'store_id' AS column_name, infer_symbol_by_column(store_id, 'store_id') AS formatted_value FROM payment_stats
+CONTEXT:  PL/pgSQL function add_symbol_to_table(text) line 16 at RETURN QUERY
+SQL state: 42725
