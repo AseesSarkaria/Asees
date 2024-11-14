@@ -1,0 +1,26 @@
+CREATE OR REPLACE FUNCTION add_symbol_to_table(view_name TEXT)
+RETURNS TABLE(column_name TEXT, formatted_value TEXT) AS $$
+DECLARE
+    col RECORD;
+    query TEXT;
+BEGIN
+    -- Loop through each column in the specified view
+    FOR col IN 
+        SELECT a.attname AS column_name
+        FROM pg_catalog.pg_attribute a
+        JOIN pg_catalog.pg_class c ON a.attrelid = c.oid
+        WHERE c.relname = view_name
+          AND a.attnum > 0
+          AND NOT a.attisdropped
+    LOOP
+        -- Construct the dynamic query to apply infer_symbol_by_column function
+        query := format(
+            'SELECT %L AS column_name, infer_symbol_by_column(%I, %L) AS formatted_value FROM %I',
+            col.column_name, col.column_name, col.column_name, view_name
+        );
+
+        -- Execute the dynamic query and return the result
+        RETURN QUERY EXECUTE query;
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;
