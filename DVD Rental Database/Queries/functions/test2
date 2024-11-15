@@ -1,11 +1,12 @@
-CREATE OR REPLACE FUNCTION add_symbol(view_name TEXT)
-RETURNS SETOF JSONB AS $$
+CREATE OR REPLACE PROCEDURE add_symbol_proc(view_name TEXT)
+LANGUAGE plpgsql
+AS $$
 DECLARE
     col RECORD;
     column_list TEXT := '';
 BEGIN
     -- Loop through each column in the specified view
-    FOR col IN 
+    FOR col IN
         SELECT a.attname AS column_name
         FROM pg_catalog.pg_attribute a
         JOIN pg_catalog.pg_class c ON a.attrelid = c.oid
@@ -14,15 +15,17 @@ BEGIN
           AND NOT a.attisdropped
         ORDER BY a.attnum
     LOOP
-        -- Build the JSON format with infer_symbol_by_column for each column
-        column_list := column_list || 
-            format('''%I'', infer_symbol_by_column(%I, %L), ', col.column_name, col.column_name, col.column_name);
+        -- Build the list of formatted columns for the dynamic query
+        column_list := column_list || format(
+            'infer_symbol_by_column(%I, %L) AS %I, ',
+            col.column_name, col.column_name, col.column_name
+        );
     END LOOP;
 
     -- Remove the trailing comma and space from the column list
     column_list := rtrim(column_list, ', ');
 
-    -- Construct and execute the dynamic query to return JSON
-    RETURN QUERY EXECUTE format('SELECT jsonb_build_object(%s) FROM %I', column_list, view_name);
+    -- Construct and execute the full dynamic query
+    EXECUTE format('SELECT %s FROM %I', column_list, view_name);
 END;
-$$ LANGUAGE plpgsql;
+$$;
