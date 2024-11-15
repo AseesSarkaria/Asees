@@ -1,31 +1,28 @@
-CREATE OR REPLACE PROCEDURE add_symbol_proc(view_name TEXT)
-LANGUAGE plpgsql
-AS $$
+CREATE OR REPLACE FUNCTION apply_function_to_table(
+    table_name TEXT,            -- The name of the table or view
+    transform_function TEXT     -- The transformation function to apply (e.g., 'ROUND', 'UPPER')
+) RETURNS TABLE (output_row RECORD) AS $$
 DECLARE
-    col RECORD;
-    column_list TEXT := '';
+    dynamic_query TEXT;         -- To hold the dynamically constructed query
+    column_definitions TEXT;    -- To store the string of column transformations
 BEGIN
-    -- Loop through each column in the specified view
-    FOR col IN
-        SELECT a.attname AS column_name
-        FROM pg_catalog.pg_attribute a
-        JOIN pg_catalog.pg_class c ON a.attrelid = c.oid
-        WHERE c.relname = view_name
-          AND a.attnum > 0
-          AND NOT a.attisdropped
-        ORDER BY a.attnum
-    LOOP
-        -- Build the list of formatted columns for the dynamic query
-        column_list := column_list || format(
-            'infer_symbol_by_column(%I, %L) AS %I, ',
-            col.column_name, col.column_name, col.column_name
-        );
-    END LOOP;
+    -- Build the dynamic SQL by iterating over all columns of the table
+    SELECT STRING_AGG(
+        CASE 
+            WHEN data_type IN ('integer', 'numeric', 'real', 'double precision') THEN 
+                format('%s(%s) AS %s', transform_function, column_name, column_name)  -- Apply the function to numeric columns
+            WHEN data_type IN ('character varying', 'text', 'char') THEN 
+                format('%s(%s) AS %s', transform_function, column_name, column_name)  -- Apply the function to text columns
+            ELSE 
+                column_name  -- For other data types, leave the column as-is
+        END, ', ')
+    INTO column_definitions
+    FROM information_schema.columns
+    WHERE table_name = table_name;
 
-    -- Remove the trailing comma and space from the column list
-    column_list := rtrim(column_list, ', ');
+    -- Construct the full SELECT query
+    dynamic_query := format('SELECT %s FROM %s', column_definitions, table_name);
 
-    -- Construct and execute the full dynamic query
-    EXECUTE format('SELECT %s FROM %I', column_list, view_name);
-END;
-$$;
+    -- Execute the dynamic query and return the result
+    RETURN QUERY EXECUTE dynamic_query;
+END $$ LANGUAGE plpgsql;
