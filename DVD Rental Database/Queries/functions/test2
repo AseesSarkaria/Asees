@@ -1,10 +1,11 @@
 CREATE OR REPLACE FUNCTION apply_function_to_table(
     table_name TEXT,            -- The name of the table or view
     transform_function TEXT     -- The transformation function to apply (e.g., 'ROUND', 'UPPER')
-) RETURNS TABLE (output_row RECORD) AS $$
+) RETURNS SETOF RECORD AS $$
 DECLARE
     dynamic_query TEXT;         -- To hold the dynamically constructed query
     column_definitions TEXT;    -- To store the string of column transformations
+    column_list TEXT;           -- To store the list of columns for the final SELECT query
 BEGIN
     -- Build the dynamic SQL by iterating over all columns of the table
     SELECT STRING_AGG(
