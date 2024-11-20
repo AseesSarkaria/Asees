@@ -1,3 +1,4 @@
+```sql
 SELECT 
 	c.city || ',' || cy.country AS store,
     m.first_name) || ' ' || m.last_name AS manager,
