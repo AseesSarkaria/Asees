@@ -13,8 +13,8 @@ WHERE r.rental_id IN (	SELECT payment.rental_id
           				GROUP BY payment.rental_id
          				HAVING count(payment.rental_id) > count(DISTINCT payment.rental_id)
 					 )
-
-
+```
+```text
 ---Output--- 
 "payment_id"	"customer_id"	"staff_id"	"rental_id"	"amount"	"payment_date"
 19518	16	1	4591	1.99	"2007-02-18 03:24:38.996577"
