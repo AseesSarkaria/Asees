@@ -1,3 +1,4 @@
+```sql
 SELECT 
 	p.payment_id,
     p.customer_id,
