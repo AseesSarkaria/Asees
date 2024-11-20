@@ -1,6 +1,6 @@
 ```sql
 SELECT 
-	p.payment_id,
+    p.payment_id,
     p.customer_id,
     p.staff_id,
     p.rental_id,
