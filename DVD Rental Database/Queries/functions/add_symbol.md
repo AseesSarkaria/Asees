@@ -1,3 +1,4 @@
+```sql
 CREATE OR REPLACE FUNCTION infer_symbol_by_column(value ANYELEMENT, column_name TEXT)
 RETURNS TEXT AS $$
 BEGIN
