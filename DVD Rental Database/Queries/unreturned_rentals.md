@@ -9,7 +9,8 @@ SELECT
     last_update
 FROM rental
 WHERE rental.return_date IS NULL
-
+```
+```text
 ---top 5 rows---
 "rental_id"	"rental_date"	"inventory_id"	"customer_id"	"return_date"	"staff_id"	"last_update"
 11496	"2006-02-14 15:16:03"	2047	155		1	"2006-02-16 02:30:53"
