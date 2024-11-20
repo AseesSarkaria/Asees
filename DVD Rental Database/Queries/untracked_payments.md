@@ -1,6 +1,6 @@
 ```sql
-SELECT 
-	r.rental_id,
+SELECT
+    r.rental_id,
     r.rental_date,
     r.inventory_id,
     r.customer_id,
