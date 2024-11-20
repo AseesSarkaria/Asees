@@ -1,3 +1,4 @@
+```sql
 SELECT 
 	rental_id,
     rental_date,
