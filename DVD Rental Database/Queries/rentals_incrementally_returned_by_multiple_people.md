@@ -9,10 +9,10 @@ SELECT
 FROM payment p
  JOIN rental r ON (p.rental_id = r.rental_id)
 WHERE r.rental_id IN (	SELECT payment.rental_id
-           				FROM payment
-          				GROUP BY payment.rental_id
-         				HAVING count(payment.rental_id) > count(DISTINCT payment.rental_id)
-					 )
+			FROM payment
+			GROUP BY payment.rental_id
+			HAVING count(payment.rental_id) > count(DISTINCT payment.rental_id)
+			)
 ```
 ```text
 ---Output--- 
