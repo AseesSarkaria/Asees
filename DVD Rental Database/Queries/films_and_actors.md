@@ -1,3 +1,4 @@
+```sql
 SELECT 
     film.film_id AS fid,
     film.title,
@@ -13,7 +14,8 @@ FROM category
  JOIN film_actor ON film.film_id = film_actor.film_id
  JOIN actor ON film_actor.actor_id = actor.actor_id
 GROUP BY film.film_id, film.title, film.description, category.name, film.rental_rate, film.length, film.rating
-
+```
+```text
 ---top 5 rows---
 "fid"	"title"	"description"	"category"	"price"	"length"	"rating"	"actors"
 730	"Ridgemont Submarine"	"A Unbelieveable Drama of a Waitress And a Composer who must Sink a Mad Cow in Ancient Japan"	"New"	0.99	46	"PG-13"	"Johnny Lollobrigida, Julianne Dench, Whoopi Hurt, Michael Bolger, Julia Fawcett"
