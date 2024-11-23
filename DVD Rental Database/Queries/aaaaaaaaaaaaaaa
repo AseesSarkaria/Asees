@@ -1,0 +1,9 @@
+
+"payment_id"	"integer"
+"return_date"	"timestamp without time zone"
+"inventory_id"	"integer"
+"store_id"	"smallint"
+"rental_date"	"timestamp without time zone"
+"customer_name"	"text"
+"rental_duration"	"text"
+"sales_rep"	"text"
