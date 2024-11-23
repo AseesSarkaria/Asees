@@ -1,4 +1,4 @@
-
+```sql
 SELECT 
 	b.store_id,
 	date_part('year', a.payment_date) AS year,
@@ -53,7 +53,8 @@ round(stddev(payment.amount), 2) AS standard_deviation
 FROM payment
 GROUP BY (date_part('year', payment.payment_date)), (date_part('month', payment.payment_date))
 ORDER BY 1, 2, 3
-
+```
+```text
 ---Output---
 "store_id"	"year"	"month"	"purchase_volume"	"revenue"	"mom_purchase_volume"	"mom_revenue"	"mom_purchases_to_revenue_ratio"	"biggest_purchase"	"smallest_purchase"	"max_min_difference"	"average_purchase"	"median_purchase"	"avg_med_difference"
 0	2007	2	2016	8351.84				10.99	0.99	10.00	4.14	3.99	0.14999999999999947	2.35
