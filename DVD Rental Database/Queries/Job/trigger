@@ -1,0 +1,4 @@
+CREATE TRIGGER trigger_refresh_summary
+AFTER INSERT ON detailed
+FOR EACH STATEMENT
+EXECUTE PROCEDURE refresh_summary();
