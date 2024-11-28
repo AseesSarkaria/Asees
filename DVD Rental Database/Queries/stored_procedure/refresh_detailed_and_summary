@@ -1,0 +1,121 @@
+CREATE OR REPLACE PROCEDURE refresh_detailed_and_summary()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+
+    CREATE TABLE IF NOT EXISTS detailed (
+        payment_id INTEGER,
+		customer_name TEXT,
+		rental_date TIMESTAMP WITHOUT TIME ZONE,
+        return_date TIMESTAMP WITHOUT TIME ZONE,
+        rental_duration TEXT,
+		payment_date timestamp without time zone,
+		amount NUMERIC (5, 2),
+		inventory_id INTEGER,
+        sales_rep TEXT,
+		store_id SMALLINT
+    );
+	CREATE TABLE IF NOT EXISTS summary (
+		store_id INTEGER, 
+		year DOUBLE PRECISION, 
+		month DOUBLE PRECISION, 
+		purchase_volume BIGINT, 
+		revenue NUMERIC, 
+		mom_purchase_volume NUMERIC, 
+		mom_revenue NUMERIC, 
+		mom_purchases_to_revenue_ratio NUMERIC, 
+		biggest_purchase NUMERIC, 
+		smallest_purchase NUMERIC, 
+		max_min_difference NUMERIC, 
+		average_purchase NUMERIC, 
+		median_purchase DOUBLE PRECISION, 
+		avg_med_difference DOUBLE PRECISION, 
+		standard_deviation NUMERIC 
+	);
+	
+	TRUNCATE TABLE detailed;
+	TRUNCATE TABLE summary;
+
+	--detailed table first
+	INSERT INTO detailed 
+	SELECT
+		p.payment_id,
+		c.first_name || ' ' || c.last_name 
+			AS customer_name,
+		r.rental_date,
+		r.return_date,
+		ADD_SYMBOL(DATE_DIFF(r.rental_date, r.return_date, 'DAY'), '_d') 
+			AS rental_duration,
+		p.payment_date,
+		p.amount,
+		r.inventory_id, 
+		s.first_name || ' ' || s.last_name 
+			AS sales_rep,
+		s.store_id
+	FROM rental r
+	 JOIN customer c USING (customer_id)
+	 JOIN staff s USING (staff_id)
+	 LEFT JOIN payment p USING (rental_id) 
+	ORDER BY r.rental_date ASC
+	;
+
+	--summary next
+    INSERT INTO summary 
+	SELECT 
+		store_id,
+		date_part('year', a.payment_date) AS year,
+		date_part('month', a.payment_date) AS month,
+		count(*) AS purchase_volume,
+		sum(a.amount) AS revenue,
+		(round(((100.0 * (count(*))) / (lag(count(*)) OVER (PARTITION BY store_id))), 2) - (100)) AS mom_purchase_volume,
+		(round(((100.0 * sum(a.amount)) / lag(sum(a.amount)) OVER (PARTITION BY store_id)), 2) - (100)) AS mom_revenue,
+		round((((100.0 * sum(a.amount)) / lag(sum(a.amount)) OVER (PARTITION BY store_id)) - (((100.0 * (count(*))) / (lag(count(*)) OVER (PARTITION BY store_id))) - (100))), 2) AS mom_purchases_to_revenue_ratio,
+		max(a.amount) AS biggest_purchase,
+		min(
+			CASE
+				WHEN (a.amount > 0) THEN a.amount
+				ELSE NULL
+			END) AS smallest_purchase,
+		max(a.amount) - min(
+			CASE
+				WHEN (a.amount > 0) THEN a.amount
+				ELSE NULL
+			END) AS max_min_difference,
+		round(avg(a.amount), 2) AS average_purchase,
+		percentile_cont((0.5)) WITHIN GROUP (ORDER BY ((a.amount))) AS median_purchase,
+		(round(avg(a.amount), 2) - (percentile_cont((0.5)) WITHIN GROUP (ORDER BY ((a.amount))))) AS avg_med_difference,
+		round(stddev(a.amount), 2) AS standard_deviation
+	FROM detailed a
+	WHERE payment_id IS NOT NULL
+	GROUP BY store_id, (date_part('year', a.payment_date)), (date_part('month', a.payment_date))
+	UNION ALL
+	SELECT 0 AS store_id,
+	date_part('year', payment_date) AS year,
+	date_part('month', payment.payment_date) AS month,
+	count(*) AS purchase_volume,
+	sum(payment.amount) AS revenue,
+	(round(((100.0 * (count(*))) / (lag(count(*)) OVER ())), 2) - (100)) AS mom_purchase_volume,
+	(round(((100.0 * sum(payment.amount)) / lag(sum(payment.amount)) OVER ()), 2) - (100)) AS mom_revenue,
+	round((((100.0 * sum(payment.amount)) / lag(sum(payment.amount)) OVER ()) - (((100.0 * (count(*))) / (lag(count(*)) OVER ())) - (100))), 2) AS mom_purchases_to_revenue_ratio,
+	max(payment.amount) AS biggest_purchase,
+	min(
+		CASE
+			WHEN (payment.amount > (0)) THEN payment.amount
+			ELSE NULL
+		END) AS smallest_purchase,
+	(max(payment.amount) - min(
+		CASE
+			WHEN (payment.amount > (0)) THEN payment.amount
+			ELSE NULL
+		END)) AS max_min_difference,
+	round(avg(payment.amount), 2) AS average_purchase,
+	percentile_cont((0.5)) WITHIN GROUP (ORDER BY ((payment.amount))) AS median_purchase,
+	(round(avg(payment.amount), 2) - (percentile_cont((0.5)) WITHIN GROUP (ORDER BY ((payment.amount))))) AS avg_med_difference,
+	round(stddev(payment.amount), 2) AS standard_deviation
+	FROM detailed payment
+	WHERE payment_id IS NOT NULL
+	GROUP BY (date_part('year', payment.payment_date)), (date_part('month', payment.payment_date))
+	ORDER BY 1, 2, 3
+	;
+END;
+$$;
