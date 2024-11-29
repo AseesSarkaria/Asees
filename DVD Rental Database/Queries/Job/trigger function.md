@@ -1,3 +1,4 @@
+```sql
 CREATE OR REPLACE FUNCTION update_summary_on_insert()
 RETURNS TRIGGER AS $$
 BEGIN
