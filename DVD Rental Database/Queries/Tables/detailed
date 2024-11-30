@@ -1,10 +1,12 @@
-CREATE TABLE detailed ( 
-    payment_id INTEGER, 
-    return_date TIMESTAMP WITHOUT TIME ZONE, 
-    inventory_id INTEGER, 
-    store_id SMALLINT, 
-    rental_date TIMESTAMP WITHOUT TIME ZONE, 
-    customer_name TEXT, 
-    rental_duration TEXT, 
-    sales_rep TEXT 
-); 
+CREATE TABLE IF NOT EXISTS detailed (
+	customer_name	text
+	,amount			numeric
+	,payment_date	timestamp without time zone
+	,rental_date		timestamp without time zone
+	,return_date		timestamp without time zone
+	,rental_duration	text
+	,sales_rep		text
+	,store_id		smallint
+	,payment_id		integer
+	,inventory_id	integer
+)
