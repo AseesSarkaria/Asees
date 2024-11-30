@@ -1,12 +1,9 @@
+```sql
 CREATE OR REPLACE PROCEDURE refresh_summary()
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    -- Clear the contents of the detailed and summary tables
-    TRUNCATE TABLE detailed;
-    TRUNCATE TABLE summary;
 
-    -- Recreate the detailed table
     CREATE TABLE IF NOT EXISTS detailed (
         payment_id INTEGER,
         return_date TIMESTAMP WITHOUT TIME ZONE,
@@ -18,8 +15,7 @@ BEGIN
         sales_rep TEXT
     );
 
-    -- Populate the summary table
-    INSERT INTO summary (
+    CREATE TABLE IF NOT EXISTS summary (
         store_id,
         year,
         month,
@@ -36,6 +32,27 @@ BEGIN
         avg_med_difference,
         standard_deviation
     )
+
+    TRUNCATE TABLE detailed;
+    TRUNCATE TABLE summary;
+
+    INSERT INTO detailed 
+	SELECT 
+        p.payment_id, 
+        c.first_name || ' ' || c.last_name AS customer_name, 
+        r.rental_date, 
+        r.return_date, 
+    	ADD_SYMBOL(DATE_DIFF(r.rental_date, r.return_date, 'DAY'), '_d')  AS rental_duration, 
+    	r.inventory_id,  
+        s.first_name || ' ' || s.last_name AS sales_rep, 
+    	s.store_id 
+    FROM rental r 
+    JOIN customer c USING (customer_id) 
+    JOIN staff s USING (staff_id) 
+    LEFT JOIN payment p USING (rental_id)  
+    ORDER BY r.rental_date ASC 
+
+    INSERT INTO summary
     SELECT 
         b.store_id,
         date_part('year', a.rental_date) AS year,
