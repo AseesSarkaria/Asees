@@ -39,21 +39,22 @@ BEGIN
     TRUNCATE TABLE summary;
 
     INSERT INTO detailed 
-    SELECT 
-        p.payment_id, 
-        c.first_name || ' ' || c.last_name AS customer_name,
-	p.amount, 
+	SELECT 
+        c.first_name || ' ' || c.last_name AS customer_name, 
+		p.amount,
+		p.payment_date,
         r.rental_date, 
         r.return_date, 
-    	ADD_SYMBOL(DATE_DIFF(r.rental_date, r.return_date, 'DAY'), '_d')  AS rental_duration,  
-        s.first_name || ' ' || s.last_name AS sales_rep, 
+    	ADD_SYMBOL(DATE_DIFF(r.rental_date, r.return_date, 'DAY'), '_d')  AS rental_duration, 
+    	s.first_name || ' ' || s.last_name AS sales_rep,
     	s.store_id,
-	r.inventory_id, 
+		p.payment_id, 
+		r.inventory_id
     FROM rental r 
     JOIN customer c USING (customer_id) 
     JOIN staff s USING (staff_id) 
     LEFT JOIN payment p USING (rental_id)  
-    ORDER BY r.rental_date ASC 
+    ORDER BY r.rental_date ASC  
 
     INSERT INTO summary
     SELECT 
