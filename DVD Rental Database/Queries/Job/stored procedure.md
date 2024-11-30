@@ -5,14 +5,16 @@ AS $$
 BEGIN
 
     CREATE TABLE IF NOT EXISTS detailed (
-        payment_id INTEGER,
-        return_date TIMESTAMP WITHOUT TIME ZONE,
-        inventory_id INTEGER,
-        store_id SMALLINT,
-        rental_date TIMESTAMP WITHOUT TIME ZONE,
-        customer_name TEXT,
-        rental_duration TEXT,
-        sales_rep TEXT
+	payment_id	integer
+	customer_name	text
+	amount		numeric
+	payment_date	timestamp without time zone
+	rental_date	timestamp without time zone
+	return_date	timestamp without time zone
+	rental_duration	text
+	sales_rep	text
+	store_id	smallint
+	inventory_id	integer
     );
 
     CREATE TABLE IF NOT EXISTS summary (
@@ -37,15 +39,16 @@ BEGIN
     TRUNCATE TABLE summary;
 
     INSERT INTO detailed 
-	SELECT 
+    SELECT 
         p.payment_id, 
-        c.first_name || ' ' || c.last_name AS customer_name, 
+        c.first_name || ' ' || c.last_name AS customer_name,
+	p.amount, 
         r.rental_date, 
         r.return_date, 
-    	ADD_SYMBOL(DATE_DIFF(r.rental_date, r.return_date, 'DAY'), '_d')  AS rental_duration, 
-    	r.inventory_id,  
+    	ADD_SYMBOL(DATE_DIFF(r.rental_date, r.return_date, 'DAY'), '_d')  AS rental_duration,  
         s.first_name || ' ' || s.last_name AS sales_rep, 
-    	s.store_id 
+    	s.store_id,
+	r.inventory_id, 
     FROM rental r 
     JOIN customer c USING (customer_id) 
     JOIN staff s USING (staff_id) 
