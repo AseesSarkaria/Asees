@@ -1,3 +1,4 @@
+```sql
 CREATE TABLE IF NOT EXISTS detailed (
 	customer_name	text
 	,amount			numeric
