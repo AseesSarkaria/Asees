@@ -5,7 +5,7 @@ BEGIN
     RETURN CASE 
         WHEN column_name LIKE '%_p' THEN CONCAT(value::TEXT, '%')
         WHEN column_name LIKE '%_m' THEN CONCAT('$', value::TEXT)
-        -- other cases
+
         ELSE value::TEXT
     END;
 END;
