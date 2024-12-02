@@ -1,3 +1,4 @@
+```sql
 CREATE TABLE summary (
     store_id INTEGER, 
     year DOUBLE PRECISION, 
