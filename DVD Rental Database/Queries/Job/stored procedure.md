@@ -10,14 +10,14 @@ BEGIN
 	,payment_date		timestamp without time zone
 	,rental_date		timestamp without time zone
 	,return_date		timestamp without time zone
-	,rental_duration	text
+	,rental_duration	numeric
 	,sales_rep		text
 	,store_id		smallint
 	,payment_id		integer
 	,inventory_id		integer
 	);
 
-CREATE TABLE IF NOT EXISTS summary (
+	CREATE TABLE IF NOT EXISTS summary (
         store_id INTEGER, 
         year DOUBLE PRECISION, 
         month DOUBLE PRECISION, 
@@ -25,10 +25,10 @@ CREATE TABLE IF NOT EXISTS summary (
         revenue NUMERIC, 
         biggest_purchase NUMERIC, 
         smallest_purchase NUMERIC, 
-	avgerage_purchase NUMERIC,
-	longest_rental NUMERIC,
-	shortest_rental NUMERIC,
-	average_rental NUMERIC
+		avgerage_purchase NUMERIC,
+		longest_rental NUMERIC,
+		shortest_rental NUMERIC,
+		average_rental NUMERIC
     );
 
     TRUNCATE TABLE detailed;
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS summary (
 		p.payment_date,
         r.rental_date, 
         r.return_date, 
-    	ADD_SYMBOL(DATE_DIFF(r.rental_date, r.return_date, 'DAY'), '_d')  AS rental_duration, 
+    	DATE_DIFF(r.rental_date, r.return_date, 'day')  AS rental_duration, 
     	s.first_name || ' ' || s.last_name AS sales_rep,
     	s.store_id,
 		p.payment_id, 
@@ -52,33 +52,28 @@ CREATE TABLE IF NOT EXISTS summary (
     LEFT JOIN payment p USING (rental_id)  
     ORDER BY r.rental_date ASC;
 
-    INSERT INTO summary
+    INSERT INTO summary 
     SELECT 
-        b.store_id,
-        date_part('year', a.rental_date) AS year,
-        date_part('month', a.rental_date) AS month,
+        store_id,
+        date_part('year', payment_date) AS year,
+        date_part('month', payment_date) AS month,
         COUNT(*) AS purchase_volume,
-        SUM(a.payment_id) AS revenue, -- Replace payment_id with actual revenue field
-        NULL AS mom_purchase_volume, -- Placeholder for MoM calculations
-        NULL AS mom_revenue,         -- Placeholder for MoM calculations
-        NULL AS mom_purchases_to_revenue_ratio, -- Placeholder for MoM calculations
-        MAX(a.payment_id) AS biggest_purchase, -- Replace with actual amount field
+        SUM(amount) AS revenue,
+        MAX(amount) AS biggest_purchase,
         MIN(
             CASE
-                WHEN (a.payment_id > 0) THEN a.payment_id
+                WHEN (amount > 0) THEN amount
                 ELSE NULL
             END) AS smallest_purchase,
-        MAX(a.payment_id) - MIN(
-            CASE
-                WHEN (a.payment_id > 0) THEN a.payment_id
-                ELSE NULL
-            END) AS max_min_difference,
-        ROUND(AVG(a.payment_id), 2) AS average_purchase, -- Replace as needed
-        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY a.payment_id) AS median_purchase, -- Replace as needed
-        ROUND(AVG(a.payment_id), 2) - PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY a.payment_id) AS avg_med_difference, -- Replace as needed
-        ROUND(STDDEV(a.payment_id), 2) AS standard_deviation -- Replace as needed
-    FROM detailed a
-    JOIN staff b ON a.inventory_id = b.staff_id
-    GROUP BY b.store_id, date_part('year', a.rental_date), date_part('month', a.rental_date);
+        ROUND(AVG(amount), 2) AS average_purchase,
+        MAX(rental_duration) AS longest_rental,
+		MIN(rental_duration) AS shortest_rental,
+		AVG(rental_duration) AS average_rental
+    FROM detailed
+	WHERE payment_id IS NOT NULL
+    GROUP BY store_id, date_part('year', payment_date), date_part('month', payment_date)
+	;
+
 END;
 $$;
+
