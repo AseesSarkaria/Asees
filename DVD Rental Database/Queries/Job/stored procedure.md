@@ -6,15 +6,15 @@ BEGIN
 
     CREATE TABLE IF NOT EXISTS detailed (
 	payment_id	integer
-	customer_name	text
-	amount		numeric
-	payment_date	timestamp without time zone
-	rental_date	timestamp without time zone
-	return_date	timestamp without time zone
-	rental_duration	text
-	sales_rep	text
-	store_id	smallint
-	inventory_id	integer
+	customer_name	text,
+	amount		numeric,
+	payment_date	timestamp without time zone,
+	rental_date	timestamp without time zone,
+	return_date	timestamp without time zone,
+	rental_duration	text,
+	sales_rep	text,
+	store_id	smallint,
+	inventory_id	integer,
     );
 
    CREATE TABLE IF NOT EXISTS summary (
