@@ -22,14 +22,11 @@ CREATE TABLE IF NOT EXISTS summary (
         store_id INTEGER, 
         year DOUBLE PRECISION, 
         month DOUBLE PRECISION, 
-        purchase_volume BIGINT, 
+        purchase_volume INT, 
         revenue NUMERIC, 
-        mom_purchase_volume NUMERIC, 
-        mom_revenue NUMERIC, 
-        mom_purchases_to_revenue_ratio NUMERIC, 
         biggest_purchase NUMERIC, 
         smallest_purchase NUMERIC, 
-		longest_rental SMALL INT,
-		shortest_rental SMALL INT,
-		average_rental_duration SMALL INT
+	longest_rental NUMERIC,
+	shortest_rental NUMERIC,
+	average_rental_duration NUMERIC
     )
