@@ -26,7 +26,8 @@ CREATE TABLE IF NOT EXISTS summary (
         revenue NUMERIC, 
         biggest_purchase NUMERIC, 
         smallest_purchase NUMERIC, 
+	avgerage_purchase NUMERIC,
 	longest_rental NUMERIC,
 	shortest_rental NUMERIC,
-	average_rental_duration NUMERIC
+	average_rental NUMERIC
     )
