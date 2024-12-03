@@ -56,7 +56,6 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION update_summary_on_insert()
 RETURNS TRIGGER AS $$
 BEGIN
-    -- Insert or update the summary table
     INSERT INTO summary 
     SELECT 
         NEW.store_id,
