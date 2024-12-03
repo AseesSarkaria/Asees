@@ -1,4 +1,3 @@
-```sql
 CREATE OR REPLACE PROCEDURE refresh_summary()
 LANGUAGE plpgsql
 AS $$
@@ -54,7 +53,7 @@ BEGIN
     JOIN customer c USING (customer_id) 
     JOIN staff s USING (staff_id) 
     LEFT JOIN payment p USING (rental_id)  
-    ORDER BY r.rental_date ASC  
+    ORDER BY r.rental_date ASC;
 
     INSERT INTO summary
     SELECT 
