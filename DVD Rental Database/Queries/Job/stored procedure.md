@@ -1,3 +1,4 @@
+```sql
 CREATE OR REPLACE PROCEDURE refresh_summary()
 LANGUAGE plpgsql
 AS $$
