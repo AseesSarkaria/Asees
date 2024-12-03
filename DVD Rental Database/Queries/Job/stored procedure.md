@@ -17,7 +17,7 @@ BEGIN
 	inventory_id	integer
     );
 
-   CREATE TABLE summary (
+   CREATE TABLE IF NOT EXISTS summary (
     store_id INTEGER, 
     year DOUBLE PRECISION, 
     month DOUBLE PRECISION, 
