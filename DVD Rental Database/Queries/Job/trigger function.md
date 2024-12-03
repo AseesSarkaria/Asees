@@ -73,7 +73,7 @@ BEGIN
         add_symbol(ROUND(AVG(NEW.amount), 2), '_m') AS average_purchase,
         add_symbol(MAX(NEW.rental_duration), '_d') AS longest_rental,
 		add_symbol(MIN(NEW.rental_duration), '_d') AS shortest_rental,
-		add_symbol(AVG(NEW.rental_duration), '_d') AS average_rental
+		add_symbol(round(AVG(NEW.rental_duration), 2), '_d') AS average_rental
     FROM detailed
 	WHERE NEW.payment_id IS NOT NULL
     GROUP BY store_id, date_part('year', NEW.payment_date), date_part('month', NEW.payment_date)
