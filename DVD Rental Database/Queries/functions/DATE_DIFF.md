@@ -1,6 +1,6 @@
 ```sql
 CREATE OR REPLACE FUNCTION DATE_DIFF(start_date TIMESTAMP, end_date TIMESTAMP, unit TEXT DEFAULT NULL)
-RETURNS TEXT AS $$
+RETURNS numeric AS $$
 BEGIN
     IF unit IS NULL THEN
         -- Return the raw interval using AGE()
