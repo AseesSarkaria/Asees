@@ -19,15 +19,16 @@ CREATE TABLE summary (
 ```
 ```sql
 CREATE TABLE IF NOT EXISTS summary (
-        store_id INTEGER, 
-        year DOUBLE PRECISION, 
-        month DOUBLE PRECISION, 
-        purchase_volume INT, 
-        revenue NUMERIC, 
-        biggest_purchase NUMERIC, 
-        smallest_purchase NUMERIC, 
-	avgerage_purchase NUMERIC,
-	longest_rental NUMERIC,
-	shortest_rental NUMERIC,
-	average_rental NUMERIC
-    )
+	store_id 		INTEGER, 
+	year 			DOUBLE PRECISION, 
+	month 			DOUBLE PRECISION, 
+	purchase_volume 	INT, 
+	revenue 		TEXT, 
+	biggest_purchase 	TEXT, 
+	smallest_purchase 	TEXT, 
+	avgerage_purchase 	TEXT,
+	longest_rental		TEXT,
+	shortest_rental 	TEXT,
+	average_rental 		TEXT
+);
+
