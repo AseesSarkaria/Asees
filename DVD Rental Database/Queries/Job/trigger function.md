@@ -18,17 +18,17 @@ BEGIN
                 ELSE NULL
             END), '_m') AS smallest_purchase,
         add_symbol( ROUND(AVG(amount), 2), '_m') AS average_purchase,
-        CASE WHEN when MAX(rental_duration) IS NULL
+        CASE WHEN MAX(rental_duration) IS NULL
 			THEN 'Month in progress - no returns yet'
 			ELSE add_symbol( MAX(rental_duration), '_d')
 		END AS longest_rental,
-		CASE WHEN when MIN(rental_duration) IS NULL
+		CASE WHEN MIN(rental_duration) IS NULL
 			THEN 'Month in progress - no returns yet'
 			ELSE add_symbol( MIN(rental_duration), '_d')
 		END AS shortest_rental,
-		CASE WHEN when MIN(rental_duration) IS NULL
+		CASE WHEN MIN(rental_duration) IS NULL
 			THEN 'Month in progress - no returns yet'
-			LESE add_symbol( round(AVG(rental_duration), 2), '_d')
+			ELSE add_symbol( round(AVG(rental_duration), 2), '_d')
 		END AS average_rental
     FROM detailed
 	WHERE payment_id IS NOT NULL
