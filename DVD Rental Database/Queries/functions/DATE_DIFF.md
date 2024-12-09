@@ -3,10 +3,8 @@ CREATE OR REPLACE FUNCTION DATE_DIFF(start_date TIMESTAMP, end_date TIMESTAMP, u
 RETURNS numeric AS $$
 BEGIN
     IF unit IS NULL THEN
-        -- Return the raw interval using AGE()
         RETURN AGE(end_date, start_date)::TEXT;
     ELSE
-        -- Process based on the specified unit
         CASE unit
             WHEN 'day' THEN
                 RETURN EXTRACT(DAY FROM (end_date - start_date))::TEXT;
