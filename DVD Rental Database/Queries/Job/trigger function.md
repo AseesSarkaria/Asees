@@ -10,17 +10,26 @@ BEGIN
         date_part('year', payment_date) AS year,
         date_part('month', payment_date) AS month,
         COUNT(*) AS purchase_volume,
-        SUM(amount) AS revenue,
-        MAX(amount) AS biggest_purchase,
-        MIN(
+        add_symbol( SUM(amount), '_m') AS revenue,
+        add_symbol( MAX(amount), '_m') AS biggest_purchase,
+        add_symbol( MIN(
             CASE
                 WHEN (amount > 0) THEN amount
                 ELSE NULL
-            END) AS smallest_purchase,
-        ROUND(AVG(amount), 2) AS average_purchase,
-        MAX(rental_duration) AS longest_rental,
-		MIN(rental_duration) AS shortest_rental,
-		round(AVG(rental_duration), 2) AS average_rental
+            END), '_m') AS smallest_purchase,
+        add_symbol( ROUND(AVG(amount), 2), '_m') AS average_purchase,
+        CASE WHEN when MAX(rental_duration) IS NULL
+			THEN 'Month in progress - no returns yet'
+			ELSE add_symbol( MAX(rental_duration), '_d')
+		END AS longest_rental,
+		CASE WHEN when MIN(rental_duration) IS NULL
+			THEN 'Month in progress - no returns yet'
+			ELSE add_symbol( MIN(rental_duration), '_d')
+		END AS shortest_rental,
+		CASE WHEN when MIN(rental_duration) IS NULL
+			THEN 'Month in progress - no returns yet'
+			LESE add_symbol( round(AVG(rental_duration), 2), '_d')
+		END AS average_rental
     FROM detailed
 	WHERE payment_id IS NOT NULL
     GROUP BY store_id, date_part('year', payment_date), date_part('month', payment_date)
